@@ -1,0 +1,48 @@
+Week 1. Exploratory Data Analysis
+=================================
+Exploratory Graphs
+-------------------
+### One varialble
+```{r}
+pollution = read.csv('exploratoryGraphs/data/avgpm25.csv', colClasses = c('numeric','character','factor','numeric','numeric'))
+head(pollution)
+# quantile
+summary(pollution)
+# boxplot
+boxplot(pollution$pm25, col = 'lightblue')
+abline(h=12)
+# histogram; add median and benchmark etc
+hist(pollution$pm25, col = 'lightblue')
+rug(pollution$pm25)
+abline(v=12, lwd=2)
+abline(v= median(pollution$pm25), col='purple', lwd=4)
+hist(pollution$pm25, breaks = 100, col = 'lightblue')
+rug(pollution$pm25)
+# barplot with counts
+barplot(table(pollution$region), col='wheat', main='number of counties in each region')
+```
+
+### Multivariable
+```{r}
+# flexible area plot
+plot(table(pollution$region,pollution$pm25>12))
+# boxplot, using ~ for conditioning
+boxplot(pm25~region, data=pollution)
+# hist, using par() for faceting
+old.par = par()    # saving default par() first before changing
+par(mfrow=c(2,1), mar=c(4,4,2,1))
+hist(subset(pollution,region=='east')$pm25)
+hist(subset(pollution,region=='west')$pm25)
+par(old.par)    # reset to par default setting
+# scatter plot, using with() & col
+with(pollution, plot(latitude, pm25, col=region))
+abline(h=12, lwd=2, lty=2)
+# multi scatter plots
+par(mfrow=c(1,2),mar=c(5,4,2,1))
+with(subset(pollution,region=='west'), plot(latitude,pm25,main='West'))
+with(subset(pollution,region=='east'), plot(latitude,pm25,main='East'))
+par(old.par)
+```
+
+### Plotting System
+

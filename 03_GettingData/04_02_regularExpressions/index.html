@@ -1,69 +1,160 @@
 <!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
-  <title>Regular Expressions</title>
-  <meta charset="utf-8">
-  <meta name="description" content="Regular Expressions">
-  <meta name="author" content="Jeffrey Leek">
-  <meta name="generator" content="slidify" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/default.css" media="all" >
-  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/phone.css" 
-    media="only screen and (max-device-width: 480px)" >
-  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="../../librariesNew/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
-  
-  <!-- Grab CDN jQuery, fall back to local if offline -->
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
-  <script>window.jQuery || document.write('<script src="../../librariesNew/widgets/quiz/js/jquery.js"><\/script>')</script> 
-  <script data-main="../../librariesNew/frameworks/io2012/js/slides" 
-    src="../../librariesNew/frameworks/io2012/js/require-1.0.8.min.js">
-  </script>
-  
-  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Regular expressions</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
 
 </head>
-<body style="opacity: 0">
-  <slides class="layout-widescreen">
-    
-    <!-- LOGO SLIDE -->
-        <slide class="title-slide segue nobackground">
-  <aside class="gdbar">
-    <img src="../../assets/img/bloomberg_shield.png">
-  </aside>
-  <hgroup class="auto-fadein">
-    <h1>Regular Expressions</h1>
-    <h2></h2>
-    <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
-  </hgroup>
-  <article></article>  
-</slide>
-    
 
-    <!-- SLIDES -->
-    <slide class="" id="slide-1" style="background:;">
-  <hgroup>
-    <h2>Regular expressions</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
+<body>
+<h2>Regular expressions</h2>
+
+<ul>
 <li>Regular expressions can be thought of as a combination of literals and <em>metacharacters</em></li>
 <li>To draw an analogy with natural language, think of literal text forming the words of this language, and the metacharacters defining its grammar</li>
 <li>Regular expressions have a rich set of metacharacters</li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    <h2>Literals</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>Simplest pattern consists only of literals. The literal “nuclear” would match to the following lines:</p>
+<h2>Literals</h2>
+
+<p>Simplest pattern consists only of literals. The literal ???nuclear??? would match to the following lines:</p>
 
 <pre><code class="markdown">Ooh. I just learned that to keep myself alive after a
 nuclear blast! All I have to do is milk some rats
@@ -75,22 +166,17 @@ Chaos in a country that has nuclear weapons -- not good.
 
 my nephew is trying to teach me nuclear physics, or
 possibly just trying to show me how smart he is
-so I’ll be proud of him [which I am].
+so I???ll be proud of him [which I am].
 
 lol if you ever say &quot;nuclear&quot; people immediately think
 DEATH by radiation LOL
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-3" style="background:;">
-  <hgroup>
-    <h2>Literals</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>The literal “Obama” would match to the following lines</p>
+<h2>Literals</h2>
+
+<p>The literal ???Obama??? would match to the following lines</p>
 
 <pre><code class="markdown">Politics r dum. Not 2 long ago Clinton was sayin Obama
 was crap n now she sez vote 4 him n unite? WTF?
@@ -98,7 +184,7 @@ Screw em both + Mcain. Go Ron Paul!
 
 Clinton conceeds to Obama but will her followers listen??
 
-Are we sure Chelsea didn’t vote for Obama?
+Are we sure Chelsea didn???t vote for Obama?
 
 thinking ... Michelle Obama is terrific!
 
@@ -106,49 +192,34 @@ jetlag..no sleep...early mornig to starbux..Ms. Obama
 was moving
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h2>Regular Expressions</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
+<h2>Regular Expressions</h2>
+
+<ul>
 <li><p>Simplest pattern consists only of literals; a match occurs if the sequence of literals occurs anywhere in the text being tested</p></li>
-<li><p>What if we only want the word “Obama”? or sentences that end in the word “Clinton”, or “clinton” or “clinto”?</p></li>
+<li><p>What if we only want the word ???Obama???? or sentences that end in the word ???Clinton???, or ???clinton??? or ???clinto????</p></li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-5" style="background:;">
-  <hgroup>
-    <h2>Regular Expressions</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>We need a way to express </p>
+<h2>Regular Expressions</h2>
+
+<p>We need a way to express </p>
 
 <ul>
 <li>whitespace word boundaries </li>
 <li>sets of literals</li>
 <li>the beginning and end of a line </li>
-<li>alternatives (“war” or “peace”)
+<li>alternatives (???war??? or ???peace???)
 Metacharacters to the rescue!</li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>Metacharacters</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>Some metacharacters represent the start of a line</p>
+<h2>Metacharacters</h2>
+
+<p>Some metacharacters represent the start of a line</p>
 
 <pre><code class="markdown">^i think
 </code></pre>
@@ -162,16 +233,11 @@ i think i need to go to work
 i think i first saw zombo in 1999.
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Metacharacters</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>$ represents the end of a line</p>
+<h2>Metacharacters</h2>
+
+<p>$ represents the end of a line</p>
 
 <pre><code class="markdown">morning$
 </code></pre>
@@ -186,16 +252,11 @@ I walked in the rain this morning
 good morning
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Character Classes with []</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>We can list a set of characters we will accept at a given point in the match</p>
+<h2>Character Classes with []</h2>
+
+<p>We can list a set of characters we will accept at a given point in the match</p>
 
 <pre><code class="markdown">[Bb][Uu][Ss][Hh]
 </code></pre>
@@ -206,24 +267,19 @@ good morning
 I smelled the desert creosote bush, brownies, BBQ chicken
 BBQ and bushwalking at Molonglo Gorge
 Bush TOLD you that North Korea is part of the Axis of Evil
-I’m listening to Bush - Hurricane (Album Version)
+I???m listening to Bush - Hurricane (Album Version)
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>Character Classes with []</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="markdown">^[Ii] am
+<h2>Character Classes with []</h2>
+
+<pre><code class="markdown">^[Ii] am
 </code></pre>
 
 <p>will match</p>
 
-<pre><code class="markdown">i am so angry at my boyfriend i can’t even bear to
+<pre><code class="markdown">i am so angry at my boyfriend i can???t even bear to
 look at him
 
 i am boycotting the apple store
@@ -235,16 +291,11 @@ I am a very vengeful person when you ruin my sweetheart.
 I am so over this. I need food. Mmmm bacon...
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Character Classes with []</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>Similarly, you can specify a range of letters [a-z] or [a-zA-Z]; notice that the order doesn’t matter</p>
+<h2>Character Classes with []</h2>
+
+<p>Similarly, you can specify a range of letters [a-z] or [a-zA-Z]; notice that the order doesn???t matter</p>
 
 <pre><code class="markdown">^[0-9][a-zA-Z]
 </code></pre>
@@ -258,16 +309,11 @@ I am so over this. I need food. Mmmm bacon...
 1st sign of starvagtion
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr/>
 
-<slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Character Classes with []</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>When used at the beginning of a character class, the “^” is also a metacharacter and indicates matching characters NOT in the indicated class</p>
+<h2>Character Classes with []</h2>
+
+<p>When used at the beginning of a character class, the ???^??? is also a metacharacter and indicates matching characters NOT in the indicated class</p>
 
 <pre><code class="markdown">[^?.]$
 </code></pre>
@@ -281,107 +327,7 @@ Not in Baghdad
 helicopter under water? hmmm
 </code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-    <slide class="backdrop"></slide>
-  </slides>
-  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
-    <ul>
-      <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Regular expressions'>
-         1
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Literals'>
-         2
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Literals'>
-         3
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Regular Expressions'>
-         4
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Regular Expressions'>
-         5
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Metacharacters'>
-         6
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Metacharacters'>
-         7
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Character Classes with []'>
-         8
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Character Classes with []'>
-         9
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Character Classes with []'>
-         10
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Character Classes with []'>
-         11
-      </a>
-    </li>
-  </ul>
-  </div>  <!--[if IE]>
-    <script 
-      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
-    </script>
-    <script>CFInstall.check({mode: 'overlay'});</script>
-  <![endif]-->
 </body>
-  <!-- Load Javascripts for Widgets -->
-  
-  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        processEscapes: true
-      }
-    });
-  </script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script> -->
-  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../librariesNew/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
-</script>
-<!-- LOAD HIGHLIGHTER JS FILES -->
-  <script src="../../librariesNew/highlighters/highlight.js/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
-   
-  </html>
+
+</html>
+
