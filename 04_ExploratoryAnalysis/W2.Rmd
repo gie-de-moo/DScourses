@@ -1,0 +1,60 @@
+Week 2. Exploratory Data Analysis
+=================================
+Lattice
+--------
+### Simple Plots
+```{r}
+library(lattice)
+library(datasets)
+## simple scatterplot
+xyplot(Ozone ~ Wind, data = airquality)
+## convert month to a factor
+airquality = transform(airquality, Month=factor(Month))
+xyplot(Ozone~Wind|Month, data=airquality,layout=c(5,1))
+```
+### Lattice Panel Function
+```{r}
+set.seed(10)
+x = rnorm(100)
+f = rep(0:1, each=50)
+y = x + f - f * x + rnorm(100,sd=0.5)
+f = factor(f, labels=c('Group 1','Group 2'))
+xyplot(y~x|f, layout=c(2,1)) # plots with 2 panels
+## Custom panel function
+xyplot(y~x|f, panel=function(x,y,...){
+  panel.xyplot(x,y,...) # first call the default panel function for 'xyplot'
+  panel.abline(h=median(y), lty=2) # add a horizontal line at the median
+  panel.lmline(x,y,col=2) # overlay a simple lm line
+})
+```
+ggplot2
+--------
+### NOTEs about axis limits
+```{r}
+# in base system
+testdat = data.frame(x=1:100, y=rnorm(100))
+testdat[50,2] = 100 # create outliner
+plot(testdat$x, testdat$y, type='l', ylim=c(-3,3))
+# in ggplot originally
+g = ggplot(testdat, aes(x=x,y=y))
+g + geom_line()
+g + geom_line() + ylim(-3,3) # outlier missing
+g + geom_line() + coord_cartesian(ylim=c(-3,3))  # outliner included
+```
+### New Learnings
+```{r}
+# setup ggplot
+g = ggplot(mpg, aes(log(cty), hwy))
+## add layers
+g + geom_point(alpha = 1/2) +
+  facet_wrap(drv ~ class, nrow=3, ncol=7) + 
+  # facet_wrap can have a ~ b now, and labelers both appear, easier for the eyes than facet_grid
+  geom_smooth(method = 'lm', se=F, col='steelblue') +
+  theme_bw(base_family='Avenir', base_size=10) +
+  # sth new: base_family and base_size for non "theme"'s theme
+  labs(x = expression('log ' * cty[moo])) +
+  # use experssion in axis text
+  labs(y = 'hwy', title = 'MPG Plot')
+         
+```
+
